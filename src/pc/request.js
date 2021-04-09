@@ -19,7 +19,7 @@ export const get = (url, data = {}) => {
         } else if (error.response.status == 401) {
           store.commit('setToken', { token: null })
           store.commit('setUser', { user: null })
-          window.location.replace('#/login')
+          window.location.replace('#/user/login')
           return Promise.reject({ message: '未登录' })
         } else if (error.response.status == 403) {
           return Promise.reject({ message: '禁止访问' })
@@ -51,7 +51,7 @@ export const post = (url, data = {}) => {
         } else if (error.response.status == 401) {
           store.commit('setToken', { token: null })
           store.commit('setUser', { user: null })
-          window.location.replace('#/login')
+          window.location.replace('#/user/login')
           return Promise.reject({ message: '未登录' })
         } else if (error.response.status == 403) {
           return Promise.reject({ message: '禁止访问' })

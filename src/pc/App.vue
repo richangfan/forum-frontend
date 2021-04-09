@@ -20,11 +20,16 @@
     font-weight: 500;
   }
 
-  div {
-    width: 100%;
-  }
-
   a {
     text-decoration: none;
+  }
+
+  .button {
+    background-color: #e2e2e2;
+    color: #000;
+    width: 64px;
+    border-radius: 3px;
+    border: 1px solid;
+    cursor: pointer;
   }
 </style>

@@ -4,10 +4,8 @@ import router from './router'
 import store from './store'
 
 import 'view-design/dist/styles/iview.css'
-import { Page, Form, FormItem } from 'view-design'
+import { Page } from 'view-design'
 Vue.component('Page', Page)
-Vue.component('Form', Form)
-Vue.component('FormItem', FormItem)
 
 Vue.config.productionTip = false
 

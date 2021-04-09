@@ -10,6 +10,11 @@ export default [
         component: layout,
         children: [
             {
+                path: '',
+                name: 'post',
+                component: () => import(/* webpackChunkName: "pc.post" */ '../views/post.vue')
+            },
+            {
                 path: 'list/:page',
                 name: 'list',
                 component: () => import(/* webpackChunkName: "pc.list" */ '../views/list.vue')

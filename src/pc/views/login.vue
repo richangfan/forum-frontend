@@ -1,22 +1,20 @@
 <template>
-    <Form ref="formInline" :model="formInline" :rules="ruleInline" autocomplete="on"
-        @keyup.native.enter="handleSubmit('formInline')">
-        <FormItem prop="name">
-            <Input type="text" v-model="formInline.name" placeholder="请输入手机号" autocomplete="on">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-            </Input>
-        </FormItem>
-        <FormItem prop="captcha">
-            <Input type="text" v-model="formInline.captcha" placeholder="请输入验证码" autocomplete="on">
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-            </Input>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')"
-                style="float:left; margin-right: 10px;">登入</Button>
-            <Button type="primary" @click="getCaptcha">获取验证码</Button>
-        </FormItem>
-    </Form>
+    <div class="list">
+        <div class="row">
+            <div class="label">用户名</div>
+            <div class="column"><input type="text" v-model="name"></div>
+        </div>
+        <div class="row">
+            <div class="label">密码</div>
+            <div class="column"><input type="password" v-model="password" autocomplete="new-password"></div>
+        </div>
+        <div class="row">
+            <div class="label"></div>
+            <div class="column">
+                <div class="button" @click="login">登录</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -24,48 +22,62 @@
     export default {
         data() {
             return {
-                formInline: {
-                    name: '',
-                    captcha: '',
-                },
-                ruleInline: {
-                    name: [
-                        { required: true, message: '请输入手机号', trigger: 'blur' }
-                    ],
-                    captcha: [
-                        { required: true, message: '请输入验证码', trigger: 'blur' }
-                    ],
-                },
-                captcha: false
+                name: '',
+                password: '',
             }
         },
         methods: {
-            getCaptcha() {
-                if (this.formInline.name == '') {
-                    this.$Message.error('请输入手机号')
-                    return false
+            login() {
+                if (!this.name || !this.password) {
+                    alert('有未填写的项目')
+                    return
                 }
-            },
-            handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    if (!valid) {
-                        this.$Message.error('信息填写不完整')
-                        return
-                    }
-                    post('/user/login', {
-                        name: this.formInline.name,
-                        captcha: this.formInline.captcha,
-                    }).then(data => {
-                        this.$store.commit('setToken', { token: data.token })
-                        this.$store.commit('setUser', { user: data.user })
-                        this.$router.replace({
-                            path: '/'
-                        })
-                    }).catch(error => {
-                        this.$Message.error(error.message)
+                post('/user/login', {
+                    name: this.name,
+                    password: this.password,
+                }).then(data => {
+                    this.$store.commit('setToken', { token: data.token })
+                    this.$store.commit('setUser', { user: data.user })
+                    this.$router.replace({
+                        path: '/'
                     })
+                }).catch(error => {
+                    alert(error.message)
                 })
             },
         },
     }
 </script>
+
+<style>
+    .list {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 20px auto;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 16px;
+    }
+
+    .label {
+        text-align: right;
+        width: 128px;
+        padding-right: 4px;
+        line-height: 32px;
+    }
+
+    .column {
+        width: 128px;
+        padding-right: 4px;
+        line-height: 32px;
+    }
+
+    .column>input {
+        height: 28px;
+        text-indent: 4px;
+    }
+</style>

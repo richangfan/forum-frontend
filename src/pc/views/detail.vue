@@ -40,7 +40,7 @@
         methods: {
             getData: function () {
                 get('/post/detail', { id: this.post.id }).then(data => { }).catch(error => {
-                    this.$Message.error(error.message)
+                    alert(error.message)
                 })
             }
         }
