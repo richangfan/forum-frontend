@@ -37,7 +37,10 @@
             detail: function (post) {
                 this.$router.push({
                     name: 'detail',
-                    params: { post }
+                    params: {
+                        id: post.id,
+                        post
+                    }
                 })
             }
         },
