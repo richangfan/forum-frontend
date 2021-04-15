@@ -3,7 +3,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
     lintOnSave: false,
     productionSourceMap: false,
-    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
     chainWebpack: config => {
         config.optimization.delete("splitChunks");
     },
