@@ -36,7 +36,6 @@
                     name: this.name,
                     password: this.password,
                 }).then(data => {
-                    this.$store.commit('setToken', { token: data.token })
                     this.$store.commit('setUser', { user: data.user })
                     this.$router.replace({
                         path: '/'

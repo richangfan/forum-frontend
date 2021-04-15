@@ -51,7 +51,6 @@
                     password: this.password,
                     code: this.code,
                 }).then(data => {
-                    this.$store.commit('setToken', { token: data.token })
                     this.$store.commit('setUser', { user: data.user })
                     this.$router.replace({
                         path: '/'

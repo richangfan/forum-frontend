@@ -2,7 +2,11 @@ import axios from 'axios'
 import store from './store'
 
 export const get = (url, data = {}) => {
-  data.token = store.getters.token
+  if (store.getters.user != null && store.getters.user.token != null) {
+    data.token = store.getters.user.token
+  } else {
+    data.token = ''
+  }
   return axios
     .get(url, { params: data })
     .then(res => {
@@ -17,8 +21,7 @@ export const get = (url, data = {}) => {
         if ([500, 502, 503].includes(error.response.status)) {
           return Promise.reject({ message: '服务器内部错误，请联系网站管理员' })
         } else if (error.response.status == 401) {
-          store.commit('setToken', { token: null })
-          store.commit('setUser', { user: null })
+          store.commit('setUser', { user: { token: '' } })
           window.location.replace('#/user/login')
           return Promise.reject({ message: '未登录' })
         } else if (error.response.status == 403) {
@@ -35,8 +38,12 @@ export const get = (url, data = {}) => {
 }
 
 export const post = (url, data = {}) => {
+  let token = ''
+  if (store.getters.user != null && store.getters.user.token != null) {
+    token = store.getters.user.token
+  }
   return axios
-    .post(url, data, { params: { token: store.getters.token } })
+    .post(url, data, { params: { token } })
     .then(res => {
       if (res.data && res.data.error === 0) {
         return Promise.resolve(res.data.data)
@@ -49,8 +56,7 @@ export const post = (url, data = {}) => {
         if ([500, 502, 503].includes(error.response.status)) {
           return Promise.reject({ message: '服务器内部错误，请联系网站管理员' })
         } else if (error.response.status == 401) {
-          store.commit('setToken', { token: null })
-          store.commit('setUser', { user: null })
+          store.commit('setUser', { user: { token: '' } })
           window.location.replace('#/user/login')
           return Promise.reject({ message: '未登录' })
         } else if (error.response.status == 403) {

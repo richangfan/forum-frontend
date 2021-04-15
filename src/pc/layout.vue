@@ -3,21 +3,25 @@
         <div class="header">
             <div class="container">
                 <div style="display: flex; flex-direction: row; justify-content:space-around;">
-                    <div style="font-size: 28px;">论坛</div>
+                    <!-- <div style="font-size: 28px;">论坛</div> -->
                     <div>
                         <template v-if="$router.currentRoute.name != 'list'">
                             <a class="navbar-link" @click="to('list')">首页</a>
                         </template>
-                        <template v-if="$router.currentRoute.name != 'login' && !$store.getters.token">
+                        <template
+                            v-if="$router.currentRoute.name != 'login' && ($store.getters.user == null || $store.getters.user.token == null || $store.getters.user.token == '')">
                             <a class="navbar-link" @click="to('login')">登入</a>
                         </template>
-                        <template v-if="$router.currentRoute.name != 'register' && !$store.getters.token">
+                        <template
+                            v-if="$router.currentRoute.name != 'register' && ($store.getters.user == null || $store.getters.user.token == null || $store.getters.user.token == '')">
                             <a class="navbar-link" @click="to('register')">注册</a>
                         </template>
-                        <template v-if="$router.currentRoute.name != 'post'">
+                        <template
+                            v-if="$router.currentRoute.name != 'post' && $store.getters.user != null && $store.getters.user.token != null && $store.getters.user.token != ''">
                             <a class="navbar-link" @click="to('post')">发帖</a>
                         </template>
-                        <template v-if="$store.getters.token > 0">
+                        <template
+                            v-if="$store.getters.user != null && $store.getters.user.token != null && $store.getters.user.token != ''">
                             <a class="navbar-link" @click="logout">登出</a>
                         </template>
                     </div>
@@ -42,6 +46,7 @@
 </template>
 
 <script>
+    import { get, post } from './request.js'
     export default {
         methods: {
             to: function (name) {
@@ -58,8 +63,7 @@
             },
             logout: function () {
                 get('/user/logout').then(data => {
-                    this.$store.commit('setToken', { token: null })
-                    this.$store.commit('setUser', { user: null })
+                    this.$store.commit('setUser', { user: { token: '' } })
                 }).catch(error => {
                     alert(error.message)
                 })
