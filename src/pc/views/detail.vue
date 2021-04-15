@@ -9,7 +9,7 @@
                     <div style="font-size: 24px; font-weight: 500;">{{post.title}}</div>
                     <div style="font-size: 14px;">作者：{{post.userName}} 发布时间：{{post.created}}</div>
                 </div>
-                <div style="font-size: 16px; margin-top: 10px;">
+                <div style="font-size: 16px; margin-top: 10px; white-space: pre-line;">
                     {{post.content}}
                 </div>
             </div>

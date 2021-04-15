@@ -36,7 +36,8 @@
             </div>
         </div>
         <div class="footer">
-            Copyright © 2019 易手宝– 浙ICP备15033169号-3
+            Copyright © 2019 易手宝– <a target="_blank"
+                href="https://beian.miit.gov.cn/#/Integrated/recordQuery">浙ICP备15033169号-3</a>
             <br>
             增值电信业务经营许可证：浙B2-20160494
             <br>
